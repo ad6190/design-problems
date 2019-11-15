@@ -1,3 +1,5 @@
+import random
+
 class Board:
     def __init__(self, id, rows, cols, snake_count, ladder_count, player_count=2, dice_count=2):
         self.id = id
@@ -55,9 +57,9 @@ class Player:
         self.name = name
         self.current_position = 0
 
-    def set_current_position(self, board, dice_face_number):
-        last_position = self.get_current_position()
-        self.current_position = last_position + dice_face_number
+    def set_current_position(self, board, movement_count):
+        last_position = self.current_position
+        self.current_position = last_position + movement_count
         if self.current_position in board.snake_map:
             snake_end = board.snake_map[self.current_position]
             self.current_position = snake_end
@@ -70,17 +72,30 @@ class Player:
         return self.current_position
 
 
-
 class Dice:
     def __init__(self, faces=6, fairness=1):
         self.faces = faces
         self.fairness = fairness
 
+    def roll_a_dice(self):
+        return random.randint(1, self.faces)
 
-class Score:
-    def __init__(self, board_id, player):
-        self.board_id = board_id
-        self.player = player
+class Game:
+    def __init__(self, board):
+        self.board = board
+        self.dice = Dice()
+        self.player_position_map = dict()
+        for player in board.players:
+            self.player_position_map[player] = 0
+
+    def player_chance(self, player):
+        move = self.dice.roll_a_dice()
+
+        last_position = player.get_current_position()
+        player.set_current_position(self.board, move)
+        current_position = player.get_current_position()
+
+        print("{} rolled a {} and moved from {} to {}".format(player.name, move, last_position, current_position))
 
 
 

@@ -37,8 +37,6 @@ def create_layout():
     for player in players:
         board.add_player(board_id, player)
 
+    return board
 
-
-if __name__ == '__main__':
-    create_layout()
 
