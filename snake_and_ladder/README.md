@@ -34,7 +34,8 @@ Assumptions you can take apart from those already mentioned in rules
     It is possible to reach 100, i.e., it is possible to win the game.
     Snakes and Ladders do not form an infinite loop.
 
-
+Sample Input
+```
 9
 62 5
 33 6
@@ -57,3 +58,4 @@ Assumptions you can take apart from those already mentioned in rules
 2
 Aditi
 Piyush
+```
