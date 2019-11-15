@@ -59,7 +59,8 @@ class Player:
 
     def set_current_position(self, board, movement_count):
         last_position = self.current_position
-        self.current_position = last_position + movement_count
+        new_position = last_position + movement_count
+        self.current_position = self.current_position if new_position > len(board.layout) else new_position
         if self.current_position in board.snake_map:
             snake_end = board.snake_map[self.current_position]
             self.current_position = snake_end
@@ -90,7 +91,6 @@ class Game:
 
     def player_chance(self, player):
         move = self.dice.roll_a_dice()
-
         last_position = player.get_current_position()
         player.set_current_position(self.board, move)
         current_position = player.get_current_position()

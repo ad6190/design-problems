@@ -39,8 +39,6 @@ def create_layout():
     for player in players:
         board.add_player(board_id, player)
 
-    print("{} board".format(board.layout))
-
     return board
 
 
