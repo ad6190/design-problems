@@ -59,3 +59,8 @@ Sample Input
 Aditi
 Piyush
 ```
+
+Limitations of this implementation: 
+1. tests are missing
+2. board is made to be a list vs a matrix (in order to save time)
+
