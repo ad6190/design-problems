@@ -35,7 +35,7 @@ class Board:
 
     def setup_board(self):
         for i in range(0, self.rows * self.cols):
-            self.layout[i] = i+1
+            self.layout.append(i+1)
 
 
 class Snake:
@@ -64,7 +64,7 @@ class Player:
             snake_end = board.snake_map[self.current_position]
             self.current_position = snake_end
         elif self.current_position in board.ladder_map:
-            ladder_end = board.snake_map[self.current_position]
+            ladder_end = board.ladder_map[self.current_position]
             self.current_position = ladder_end
         return self.current_position
 

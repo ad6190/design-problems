@@ -12,21 +12,23 @@ def create_layout():
         snake_positions = list()
         ladder_positions = list()
         players = list()
-        for i in range(1, int(number_of_snakes)):
+        for i in range(0, int(number_of_snakes.strip())):
             snake_positions.append(fp.readline().split(' '))
 
         number_of_ladders = fp.readline()
-        for i in range(1, int(number_of_ladders)):
+        for i in range(0, int(number_of_ladders.strip())):
             ladder_positions.append(fp.readline().split(' '))
 
         number_of_players = fp.readline()
-        for i in range(1, int(number_of_players)):
-            players.append(fp.readline())
+        for i in range(0, int(number_of_players.strip())):
+            players.append(fp.readline().strip())
 
     board = Board(board_id, board_rows, board_cols,
                   snake_count=number_of_snakes,
                   ladder_count=number_of_ladders,
                   player_count=number_of_players)
+
+    board.setup_board()
 
     for positions in snake_positions:
         board.place_snake(board_id, int(positions[0]), int(positions[1]))
@@ -36,6 +38,8 @@ def create_layout():
 
     for player in players:
         board.add_player(board_id, player)
+
+    print("{} board".format(board.layout))
 
     return board
 
