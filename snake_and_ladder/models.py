@@ -1,7 +1,7 @@
 class Board:
     def __init__(self, id, rows, cols, snake_count, ladder_count, player_count=2, dice_count=2):
         self.id = id
-        self.layout = list(list())
+        self.layout = list()
         self.rows = rows
         self.cols = cols
         self.snakes_count = snake_count
@@ -11,15 +11,19 @@ class Board:
         self.snakes = list()
         self.ladders = list()
         self.players = list()
+        self.snake_map = dict()
+        self.ladder_map = dict()
 
     def place_snake(self, board_id, start_pos, end_pos):
         assert board_id == self.id
         self.snakes.append(Snake(start_pos, end_pos))
+        self.snake_map[start_pos] = end_pos
 
 
     def place_ladder(self, board_id, start_pos, end_pos):
         assert board_id == self.id
         self.ladders.append(Ladder(start_pos, end_pos))
+        self.ladder_map[start_pos] = end_pos
 
     def add_player(self, board_id, name):
         assert board_id == self.id
@@ -28,11 +32,8 @@ class Board:
 
 
     def setup_board(self):
-        display_number = 0
-        for i in self.rows:
-            for j in self.cols:
-                display_number += 1
-                self.layout[i][j] = display_number
+        for i in range(0, self.rows * self.cols):
+            self.layout[i] = i+1
 
 
 class Snake:
@@ -52,6 +53,22 @@ class Ladder:
 class Player:
     def __init__(self, name):
         self.name = name
+        self.current_position = 0
+
+    def set_current_position(self, board, dice_face_number):
+        last_position = self.get_current_position()
+        self.current_position = last_position + dice_face_number
+        if self.current_position in board.snake_map:
+            snake_end = board.snake_map[self.current_position]
+            self.current_position = snake_end
+        elif self.current_position in board.ladder_map:
+            ladder_end = board.snake_map[self.current_position]
+            self.current_position = ladder_end
+        return self.current_position
+
+    def get_current_position(self):
+        return self.current_position
+
 
 
 class Dice:
